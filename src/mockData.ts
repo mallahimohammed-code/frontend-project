@@ -1,0 +1,163 @@
+import { Product, Order, Customer } from './types';
+
+export const products: Product[] = [
+  {
+    id: '1',
+    name: 'Nomad Studio Watch',
+    sku: 'NS-W-402-WT',
+    price: 249.00,
+    stock: 84,
+    maxStock: 100,
+    category: 'Lifestyle',
+    tag: 'Core',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCCLLK20smc5Qzr0k-u9-BQgZgyjvwdWOclsvDC1dn16GIu_ZX5VNvQKhU6HKI09ziKDsrfow_Xx61E17MkBSVLMc-wgpkW6DvCzsHLVO41voOtK6vbwk9C7wsFIG3OuyLTLnPGDxuIwLOE3AUBBWHu1g7fHakixoatPGY3aEMfwQ-vkOUdOCAkFLkC3ukKGCZv9ruDdvrxDX9NfUMYpW_DHqzaxDDXcM0prONQYl-e-xvGCQACaUEkeV0B2yoGFcQu463ZixteMX-p',
+    status: 'Active',
+  },
+  {
+    id: '2',
+    name: 'Acoustic Pro Headset',
+    sku: 'AP-H-900-BK',
+    price: 399.00,
+    stock: 0,
+    maxStock: 50,
+    category: 'Technology',
+    tag: 'Audio',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCU0MPn8RMz8CpsR-nUycaH82Hssn92BZetJE_WapYbXyOX115Mm5yYuCEcgOlRdgitYcq1DOYerQMcZI0Ap58Fb8SyRhYYU4a-POcOjmgSAnZ-iAPbVox3hYWypTnFgMp6QZSn1NvLjoMWhXO_EIOiZ94fp5A2LkfTUvCgJDKypCBHqR6V_sRnbHshRUCL5_D0Yi8xO5FYd7IzMXevzu56q-0lU7f1pc4xb6DHLyAa1hHFgGhzchm_W2rubA7nK12tE65gmo_tg1Qb',
+    status: 'Out of Stock',
+  },
+  {
+    id: '3',
+    name: 'Linen Overshirt',
+    sku: 'LO-S-112-BG',
+    price: 120.00,
+    stock: 12,
+    maxStock: 100,
+    category: 'Apparel',
+    tag: 'Seasonal',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCq0Ye7a0hsaULWOBvzitRkSttHfzGkMWjs5kf9V5S1Y0-Ucm2iyrPttpBD6-WhrRkG5V0hJzFedZeWifvd7pIXNDxSDzSUTiA2RdESVfsjYK-XJWsjPw211V28y89xGMDilKjoy7GjxAZitX7OoA-MiUCMV1oLIPiaQD_E-w7qFChOc6H2xsCoLtItxIeahvGS2pLrTLSqeV96y0BJKNV5dyEB-ThM3qDyPG9yHPkqr-vCtGMb4Dyy2VbLA8fFSZf-JbuMKQjmMlT5',
+    status: 'Active',
+  },
+  {
+    id: '4',
+    name: 'Drift Desk Chair',
+    sku: 'DC-C-881-GY',
+    price: 550.00,
+    stock: 342,
+    maxStock: 500,
+    category: 'Furniture',
+    tag: 'Office',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDsjA-GNt8yFtYj3-TMkOjbiyV9v9QJLjfkVDd49sOdJ_V5PcWkotcMOGDVe1q57wE8dqLZPyatlcPODjXPa0D8FQa0evALlRhDVtp4sLToMzhyORGtOEcoVEw68DgO2sPy2RV0HaGE7uBlRMDKr0b3Zs-ZrVClMeM_XLQT7JxKAXn3oLHl_j2Hx7rn8FphxRZHEyIDlJJEHIDdCCye35snzeedKsiixf2cNSECxP_Vzd9Hwso0Dbs-VJ0wbTYp9PRpaJJG6udF4OPb',
+    status: 'Active',
+  },
+];
+
+export const orders: Order[] = [
+  {
+    id: '#ORD-2841',
+    customerName: 'Elena Mitchell',
+    customerEmail: 'elena@mitchell.com',
+    customerInitials: 'EM',
+    date: 'Oct 24, 2023',
+    status: 'Delivered',
+    total: 245.00,
+  },
+  {
+    id: '#ORD-2840',
+    customerName: 'James Wilson',
+    customerEmail: 'james.w@wilson.com',
+    customerInitials: 'JW',
+    date: 'Oct 24, 2023',
+    status: 'Processing',
+    total: 89.50,
+  },
+  {
+    id: '#ORD-2839',
+    customerName: 'Sarah Reed',
+    customerEmail: 'sarah.r@reed.com',
+    customerInitials: 'SR',
+    date: 'Oct 23, 2023',
+    status: 'Shipped',
+    total: 1200.00,
+  },
+];
+
+export const customers: Customer[] = [
+  {
+    id: '1',
+    name: 'Amara Sterling',
+    email: 'amara.sterling@design.com',
+    initials: 'AS',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAW17-HY0F5daOTdGuE5cmQ0My8jG9o4LkHNwi6tZDWNkZGtO1-QaZ7auqJcT9jSFYBetEfrsd6ggTHLHKA2eL5z8-p7maWPX9GAwNIfNMdVa_4L1IruQgqi8gO0D9l-fApjjYvi05FtngAHilugGUEZ0GixDTqbSzt8IQg5AeX67u8XlPzklBwhkELS7sub3uA5WxaskuaxCsOJGlTWJmNjFWgF26mHc8imcEcsltLOrSBox9u5OLQnsiOt5JxiLiV97RdsarZv-N7',
+    totalOrders: 24,
+    totalSpent: 3420.50,
+    isVIP: true,
+    status: 'VIP',
+  },
+  {
+    id: '2',
+    name: 'Brooks Henderson',
+    email: 'brooks.h@arch.org',
+    initials: 'BH',
+    totalOrders: 12,
+    totalSpent: 1180.20,
+    isVIP: false,
+    status: 'REGULAR',
+  },
+  {
+    id: '3',
+    name: 'Julian Thorne',
+    email: 'julian.t@minimalist.co',
+    initials: 'JT',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBMQa9zVMGZZIL9p3J2YiXd-2y53GKIgH_331VFcJVtMw9n2VILk1HYUdUx2ZEdLYYh6L3PeahqMGlE7SHvs1xDClL5RmiNL54Sk1WN_muh87tlcaCPVJYpjqoBKxZAne4lqPpxBbFG69ThqueRMJYbJuuX0BuEgyz72DIwCH-9jYwEnjfQ5kEzzwXlhS64R7WoD7etibywyx0S6RzJDuxaKdzEsRlUsGs4pIsZOBVJ-a06uUOMoOsaPMoHmnn_v6mVsuw0ufjYb821',
+    totalOrders: 42,
+    totalSpent: 5940.00,
+    isVIP: true,
+    status: 'VIP',
+  },
+  {
+    id: '4',
+    name: 'Elena Rossi',
+    email: 'elena.rossi@italy.it',
+    initials: 'ER',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB9gVHg4BwkNDiRQ5kSAR6krad52NnIEbAz2q3NDckrRbmeiC-U7tRa5L1fXnDvX490wSPJcmxBASb_2hra4yxW-gj3thL5tLENQjubGUCeSrAOu9RaobY4qFGEOmeJrqhH7W_ez84tbcFQkV8-L3xzVQTCEtVJMmoWT08pCEJoNMYQVbzPU7Hne32eFete1rR62tN4hn5votqUaIsbUYefvm1DzyxOiQtZJEc8spex-OnC3wMK3SXAKFozTj0NBO8qHT0KCpgwWaW_',
+    totalOrders: 5,
+    totalSpent: 210.45,
+    isVIP: false,
+    status: 'REGULAR',
+  },
+  {
+    id: '5',
+    name: 'Marcus Chen',
+    email: 'm.chen@techly.io',
+    initials: 'MC',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCtiLM_5a7iQygZk3tkAnHxm2OnQqtckTDc_tmgmTF8QPCGSE3PCWXSe0einYuOGldEhkSJL-3rI6gIQTcDWgGTg2c9wpbM2cIIet9cWb8glk1DoBXM8Jw0q7vX6i2Qk9VHoGpH1uHhJ8RCg2tvWDb4nOLLoQg5MB71hvvx8DfrEsyhy9DPEEN_NzpTB5wDJPjF2AUIXgrAwVXr7HNO0e3OX4Minrf7PCsKqnAzpRUU2Npu7kkQywGCAG1AeSzHtdwbSZGq9YkqQcDP',
+    totalOrders: 18,
+    totalSpent: 2105.80,
+    isVIP: false,
+    status: 'REGULAR',
+  },
+];
+
+export const salesData = [
+  { name: 'Week 1', sales: 4000 },
+  { name: 'Week 2', sales: 3000 },
+  { name: 'Week 3', sales: 6000 },
+  { name: 'Week 4', sales: 4500 },
+];
+
+export const topSellers = [
+  { name: 'Minimalist Chronograph', units: 248, price: 199, image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBDyhxnW_8aXwR2F-t-M22S1ljzwFgqEhBEzcQxBZOXAvnTndUf2NGGKpcCd26XMhkMszqn-nA4tpuar7pyHD_xIwXYypp4tdq7PvcyWgI9atW-vI6KusOu2NN0KmS6oFWQuqoYeIw69JTFTZvAuwWvBywWw4nVrXymDJU1a964dR7JgGPSO0EeWA9tJ2JOgkJw6kmAQP2bn2qmo5VAckZIz5H7YvG65opU3aNQBOLZR7dD811nP5Er4H3m-_swYTeWkzBMc46UcnKv' },
+  { name: 'Elite Performance V2', units: 182, price: 85, image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDsK9-AsLuInO8fyPbqOPhKUpkwE-R34jpg1t8pBTj_-f8Sk49S_kSmDXJ5tp8s0v61K9sBD51fibBnC9IHL54grZX2C5L54yHBC82QxRut-extsFZP-uYka857-Vyv0X-PtgO6eT3Z4EYDrV6zdhsGQ4ypbyIC9NluHSu4bPG8i8ySUL0USSvO3gbk1OA_sSAnngyX8e3egZKASjPOPFhcd8F2xFzbO7G5GwbX0zfpSReaCnO_GskYZqrj9Hub7PDlnldY9PI1yII9' },
+  { name: 'Studio Wireless Pro', units: 154, price: 299, image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuACfKajbiSmCA8WFoEKKGx93sxntFIQqvAHNRQNbJ1Ttyrwmpp9oxWthcTlvGKtxxdxaSNB3HQXdVutVRHjDs8BWO-tBuzifYvfnHwyKBltDZFZK-EvO_QQCuHqWUZNCjNA3FsH2QALOsVbaYipikwfpjO4QUQAAtCfF6i857nCTJVrF0PAMZnw8mG9CcPGA4HWZ_wr-Q1zn6Qqb28wY4XogbO5okr9ZBV8by9xTo6OVsAoItbjiHMrUOEHw6K6b5iDeet0nEN8gP0Z' },
+  { name: 'Classic Wayfarer Gold', units: 92, price: 145, image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDm6hfGnWbyD5o_kj4mixpP8MhAozyrkVGA6djBCALw-2EkNM9lHMLZa8I1Eh_T_bfzPiOHvJUzVKdQE53CHG8T72v5yvG1NB0GkdY3DatynM1r9Vw19jd9lgLU8H_4fd7BLePUwqZkFzzH2CxXBQdSfGkcIzvdc211ElUhsdW72h9H8C0HGcbx-HIUSNIPPDYUn8YhceaSYvDVOIus9X4GhCNHGVhDwKUpR6mQDxQaG2BsROhRd0Yn1qpvv8hwChDNpELWkjzjcuaI' },
+];
+
+export const inventoryProjections = [
+  { day: 'Mon', value: 20 },
+  { day: 'Tue', value: 35 },
+  { day: 'Wed', value: 45 },
+  { day: 'Thu', value: 90 },
+  { day: 'Fri', value: 75 },
+  { day: 'Sat', value: 40 },
+  { day: 'Sun', value: 25 },
+];
