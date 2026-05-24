@@ -1,8 +1,13 @@
-import { Plus, Filter, MoreVertical, Search } from 'lucide-react';
+import { useState } from 'react';
+import { Plus, Filter, MoreVertical } from 'lucide-react';
 import { products } from '@/src/mockData';
 import { cn } from '@/src/lib/utils';
+import Modal from '@/src/components/Modal';
+import Button from '@/src/components/Button';
 
 export default function Products() {
+  const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
+
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -11,10 +16,13 @@ export default function Products() {
           <h1 className="text-5xl font-black tracking-tight text-on-surface">Products</h1>
           <p className="text-on-surface-variant mt-2 font-medium">Curated global inventory management</p>
         </div>
-        <button className="bg-primary text-white px-6 py-3 rounded-item font-bold flex items-center gap-2 hover:bg-primary-container transition-all shadow-bento active:scale-95">
-          <Plus className="w-5 h-5" />
+        <Button
+          size="lg"
+          leftIcon={<Plus className="w-5 h-5" />}
+          onClick={() => setIsAddItemModalOpen(true)}
+        >
           Add Item
-        </button>
+        </Button>
       </div>
 
       {/* Filters Bar */}
@@ -31,10 +39,14 @@ export default function Products() {
             </select>
           </div>
         ))}
-        <button className="bg-surface-container-lowest text-on-surface font-bold py-3.5 rounded-item text-xs uppercase tracking-widest hover:bg-surface-container transition-all flex items-center justify-center gap-2 border border-outline-variant shadow-bento">
-          <Filter className="w-4 h-4" />
+        <Button
+          variant="secondary"
+          size="sm"
+          leftIcon={<Filter className="w-4 h-4" />}
+          className="py-3.5 uppercase tracking-widest"
+        >
           Reset
-        </button>
+        </Button>
       </div>
 
       {/* Product Table */}
@@ -97,9 +109,9 @@ export default function Products() {
                     </span>
                   </td>
                   <td className="px-8 py-6 text-right">
-                    <button className="p-2.5 hover:bg-surface-container rounded-item transition-all text-on-surface-variant hover:text-primary">
+                    <Button variant="ghost" size="icon" aria-label="More options">
                       <MoreVertical className="w-5 h-5" />
-                    </button>
+                    </Button>
                   </td>
                 </tr>
               ))}
@@ -107,6 +119,85 @@ export default function Products() {
           </table>
         </div>
       </div>
+
+      <Modal
+        isOpen={isAddItemModalOpen}
+        title="Add New Item"
+        onClose={() => setIsAddItemModalOpen(false)}
+      >
+        <form className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1.5 block">
+                Product Name
+              </label>
+              <input
+                type="text"
+                placeholder="Wireless Keyboard"
+                className="w-full bg-surface-container border border-outline-variant rounded-item px-4 py-2.5 text-sm text-on-surface focus:ring-2 focus:ring-primary/20 outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1.5 block">
+                SKU
+              </label>
+              <input
+                type="text"
+                placeholder="PRD-1009"
+                className="w-full bg-surface-container border border-outline-variant rounded-item px-4 py-2.5 text-sm text-on-surface focus:ring-2 focus:ring-primary/20 outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1.5 block">
+                Price
+              </label>
+              <input
+                type="number"
+                placeholder="99.99"
+                className="w-full bg-surface-container border border-outline-variant rounded-item px-4 py-2.5 text-sm text-on-surface focus:ring-2 focus:ring-primary/20 outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1.5 block">
+                Stock
+              </label>
+              <input
+                type="number"
+                placeholder="120"
+                className="w-full bg-surface-container border border-outline-variant rounded-item px-4 py-2.5 text-sm text-on-surface focus:ring-2 focus:ring-primary/20 outline-none"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1.5 block">
+              Category
+            </label>
+            <select className="w-full bg-surface-container border border-outline-variant rounded-item px-4 py-2.5 text-sm font-semibold text-on-surface focus:ring-2 focus:ring-primary/20 outline-none">
+              <option>Lifestyle</option>
+              <option>Tech</option>
+              <option>Furniture</option>
+            </select>
+          </div>
+
+          <div className="pt-2 flex items-center justify-end gap-3">
+            <Button
+              type="button"
+              variant="secondary"
+              size="md"
+              onClick={() => setIsAddItemModalOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button type="submit" size="md">
+              Add Item
+            </Button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 }

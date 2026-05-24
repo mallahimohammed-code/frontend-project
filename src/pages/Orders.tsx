@@ -1,6 +1,9 @@
-import { Download, Plus, Search, Calendar, ChevronLeft, ChevronRight, Eye, MoreHorizontal } from 'lucide-react';
+import { useState } from 'react';
+import { Download, MoreHorizontal } from 'lucide-react';
 import { orders } from '@/src/mockData';
 import { cn } from '@/src/lib/utils';
+import Button from '@/src/components/Button';
+import Modal from '@/src/components/Modal';
 
 const OrderStat = ({ label, value, trend, sub }: any) => (
   <div className="bg-surface-container-lowest p-6 rounded-3xl shadow-sm ring-1 ring-outline-variant/10 hover:border-primary/20 transition-all group">
@@ -14,6 +17,9 @@ const OrderStat = ({ label, value, trend, sub }: any) => (
 );
 
 export default function Orders() {
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -23,13 +29,12 @@ export default function Orders() {
           <p className="text-on-surface-variant mt-2 font-medium">Transaction flow monitoring</p>
         </div>
         <div className="flex gap-3">
-          <button className="px-6 py-3 bg-surface-container-lowest text-on-surface font-bold text-sm rounded-item border border-outline-variant shadow-bento hover:bg-surface-container transition-all">
+          <Button variant="secondary" size="lg" onClick={() => setIsFilterModalOpen(true)}>
             Filter Flow
-          </button>
-          <button className="px-6 py-3 bg-primary text-white font-bold text-sm rounded-item shadow-bento transition-all active:scale-95 flex items-center gap-2">
-            <Download className="w-4 h-4" />
+          </Button>
+          <Button size="lg" leftIcon={<Download className="w-4 h-4" />} onClick={() => setIsExportModalOpen(true)}>
             Export Orders
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -84,9 +89,9 @@ export default function Orders() {
                     ${order.total.toFixed(2)}
                   </td>
                   <td className="px-10 py-7 text-center">
-                    <button className="p-2.5 hover:bg-surface-container rounded-item transition-all text-on-surface-variant hover:text-primary">
+                    <Button variant="ghost" size="icon" aria-label="More options">
                       <MoreHorizontal className="w-5 h-5" />
-                    </button>
+                    </Button>
                   </td>
                 </tr>
               ))}
@@ -94,6 +99,95 @@ export default function Orders() {
           </table>
         </div>
       </div>
+
+      <Modal
+        isOpen={isFilterModalOpen}
+        title="Filter Flow"
+        onClose={() => setIsFilterModalOpen(false)}
+      >
+        <form className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1.5 block">
+                Status
+              </label>
+              <select className="w-full bg-surface-container border border-outline-variant rounded-item px-4 py-2.5 text-sm font-semibold text-on-surface focus:ring-2 focus:ring-primary/20 outline-none">
+                <option>Any</option>
+                <option>Processing</option>
+                <option>Shipped</option>
+                <option>Delivered</option>
+                <option>Cancelled</option>
+              </select>
+            </div>
+            <div>
+              <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1.5 block">
+                Date Range
+              </label>
+              <select className="w-full bg-surface-container border border-outline-variant rounded-item px-4 py-2.5 text-sm font-semibold text-on-surface focus:ring-2 focus:ring-primary/20 outline-none">
+                <option>Last 7 Days</option>
+                <option>Last 30 Days</option>
+                <option>Last 90 Days</option>
+                <option>All Time</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1.5 block">
+              Minimum Value
+            </label>
+            <input
+              type="number"
+              placeholder="0.00"
+              className="w-full bg-surface-container border border-outline-variant rounded-item px-4 py-2.5 text-sm text-on-surface focus:ring-2 focus:ring-primary/20 outline-none"
+            />
+          </div>
+          <div className="pt-2 flex items-center justify-end gap-3">
+            <Button type="button" variant="secondary" size="md" onClick={() => setIsFilterModalOpen(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" size="md">
+              Apply Filters
+            </Button>
+          </div>
+        </form>
+      </Modal>
+
+      <Modal
+        isOpen={isExportModalOpen}
+        title="Export Orders"
+        onClose={() => setIsExportModalOpen(false)}
+      >
+        <form className="space-y-4">
+          <div>
+            <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1.5 block">
+              Format
+            </label>
+            <select className="w-full bg-surface-container border border-outline-variant rounded-item px-4 py-2.5 text-sm font-semibold text-on-surface focus:ring-2 focus:ring-primary/20 outline-none">
+              <option>CSV</option>
+              <option>XLSX</option>
+              <option>JSON</option>
+            </select>
+          </div>
+          <div>
+            <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1.5 block">
+              Include Fields
+            </label>
+            <select className="w-full bg-surface-container border border-outline-variant rounded-item px-4 py-2.5 text-sm font-semibold text-on-surface focus:ring-2 focus:ring-primary/20 outline-none">
+              <option>Summary</option>
+              <option>Full Order Details</option>
+              <option>Customer + Payment</option>
+            </select>
+          </div>
+          <div className="pt-2 flex items-center justify-end gap-3">
+            <Button type="button" variant="secondary" size="md" onClick={() => setIsExportModalOpen(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" size="md" leftIcon={<Download className="w-4 h-4" />}>
+              Export
+            </Button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 }

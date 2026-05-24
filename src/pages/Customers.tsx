@@ -1,6 +1,7 @@
 import { FileUp, UserPlus, MoreVertical, ChevronLeft, ChevronRight, Download } from 'lucide-react';
 import { customers } from '@/src/mockData';
 import { cn } from '@/src/lib/utils';
+import Button from '@/src/components/Button';
 
 export default function Customers() {
   return (
@@ -12,14 +13,12 @@ export default function Customers() {
           <p className="text-on-surface-variant mt-2 font-medium">User relationship intelligence</p>
         </div>
         <div className="flex gap-3">
-          <button className="px-6 py-3 bg-surface-container-lowest text-on-surface font-bold text-sm rounded-item border border-outline-variant shadow-bento hover:bg-surface-container transition-all flex items-center gap-2">
-            <FileUp className="w-5 h-5 text-on-surface-variant" />
+          <Button variant="secondary" size="lg" leftIcon={<FileUp className="w-5 h-5" />}>
             Export List
-          </button>
-          <button className="bg-primary text-white px-6 py-3 rounded-item font-bold flex items-center gap-2 hover:opacity-90 transition-all shadow-bento active:scale-95">
-            <UserPlus className="w-5 h-5 text-white/90" />
+          </Button>
+          <Button size="lg" leftIcon={<UserPlus className="w-5 h-5" />}>
             Invite User
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -32,9 +31,9 @@ export default function Customers() {
                 <div className="w-16 h-16 rounded-item bg-indigo-50 flex items-center justify-center text-primary text-xl font-black border border-primary/10">
                   {customer.initials}
                 </div>
-                <button className="p-2 hover:bg-surface-container rounded-item text-on-surface-variant transition-colors">
+                <Button variant="ghost" size="icon" aria-label="More options">
                   <MoreVertical className="w-5 h-5" />
-                </button>
+                </Button>
               </div>
               
               <h3 className="text-xl font-extrabold text-on-surface mb-1 truncate">{customer.name}</h3>

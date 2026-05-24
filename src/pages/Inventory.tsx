@@ -1,18 +1,20 @@
-import { Filter, RefreshCcw, AlertCircle, Truck, TrendingUp, CloudOff, Zap, PlusCircle } from 'lucide-react';
-import { products, inventoryProjections } from '@/src/mockData';
-import { cn } from '@/src/lib/utils';
+import { useState } from 'react';
+import { Filter, RefreshCcw, AlertCircle, Truck, PlusCircle } from 'lucide-react';
+import { inventoryProjections } from '@/src/mockData';
+import Button from '@/src/components/Button';
+import Modal from '@/src/components/Modal';
 import { 
   BarChart, 
   Bar, 
   XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
   ResponsiveContainer,
   Cell
 } from 'recharts';
 
 export default function Inventory() {
+  const [isStockSyncModalOpen, setIsStockSyncModalOpen] = useState(false);
+  const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
+
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -22,14 +24,21 @@ export default function Inventory() {
           <p className="text-on-surface-variant mt-2 font-medium">Global stock health monitoring</p>
         </div>
         <div className="flex items-center gap-3">
-          <button className="px-5 py-2.5 bg-surface-container-lowest text-on-surface font-bold text-sm rounded-item hover:bg-surface-container-high transition-all flex items-center gap-2 border border-outline-variant shadow-bento">
-            <RefreshCcw className="w-4 h-4" />
+          <Button
+            variant="secondary"
+            size="md"
+            leftIcon={<RefreshCcw className="w-4 h-4" />}
+            onClick={() => setIsStockSyncModalOpen(true)}
+          >
             Stock Sync
-          </button>
-          <button className="px-5 py-2.5 bg-primary text-white font-bold text-sm rounded-item shadow-bento transition-all active:scale-95 flex items-center gap-2">
-            <PlusCircle className="w-4 h-4" />
+          </Button>
+          <Button
+            size="md"
+            leftIcon={<PlusCircle className="w-4 h-4" />}
+            onClick={() => setIsAlertModalOpen(true)}
+          >
             Ad-hoc Alert
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -126,11 +135,98 @@ export default function Inventory() {
               </div>
             </div>
           </div>
-          <button className="w-full mt-8 py-4 bg-outline-variant rounded-item text-[11px] font-bold uppercase tracking-widest text-on-surface hover:bg-surface-container transition-all">
+          <Button
+            variant="secondary"
+            className="w-full mt-8 py-4 bg-outline-variant text-[11px] uppercase tracking-widest hover:bg-surface-container"
+          >
             Full Audit
-          </button>
+          </Button>
         </div>
       </div>
+
+      <Modal
+        isOpen={isStockSyncModalOpen}
+        title="Stock Sync"
+        onClose={() => setIsStockSyncModalOpen(false)}
+      >
+        <form className="space-y-4">
+          <div>
+            <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1.5 block">
+              Warehouse Node
+            </label>
+            <select className="w-full bg-surface-container border border-outline-variant rounded-item px-4 py-2.5 text-sm font-semibold text-on-surface focus:ring-2 focus:ring-primary/20 outline-none">
+              <option>Europe Central</option>
+              <option>Asia-Pacific</option>
+              <option>North America East</option>
+            </select>
+          </div>
+          <div>
+            <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1.5 block">
+              Sync Scope
+            </label>
+            <select className="w-full bg-surface-container border border-outline-variant rounded-item px-4 py-2.5 text-sm font-semibold text-on-surface focus:ring-2 focus:ring-primary/20 outline-none">
+              <option>All SKUs</option>
+              <option>Low Stock Only</option>
+              <option>Changed Since Last Sync</option>
+            </select>
+          </div>
+          <div className="pt-2 flex items-center justify-end gap-3">
+            <Button type="button" variant="secondary" size="md" onClick={() => setIsStockSyncModalOpen(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" size="md">
+              Run Sync
+            </Button>
+          </div>
+        </form>
+      </Modal>
+
+      <Modal
+        isOpen={isAlertModalOpen}
+        title="Ad-hoc Alert"
+        onClose={() => setIsAlertModalOpen(false)}
+      >
+        <form className="space-y-4">
+          <div>
+            <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1.5 block">
+              Alert Title
+            </label>
+            <input
+              type="text"
+              placeholder="Europe warehouse delay"
+              className="w-full bg-surface-container border border-outline-variant rounded-item px-4 py-2.5 text-sm text-on-surface focus:ring-2 focus:ring-primary/20 outline-none"
+            />
+          </div>
+          <div>
+            <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1.5 block">
+              Severity
+            </label>
+            <select className="w-full bg-surface-container border border-outline-variant rounded-item px-4 py-2.5 text-sm font-semibold text-on-surface focus:ring-2 focus:ring-primary/20 outline-none">
+              <option>Critical</option>
+              <option>Warning</option>
+              <option>Info</option>
+            </select>
+          </div>
+          <div>
+            <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1.5 block">
+              Message
+            </label>
+            <textarea
+              rows={4}
+              placeholder="Describe the inventory event..."
+              className="w-full bg-surface-container border border-outline-variant rounded-item px-4 py-2.5 text-sm text-on-surface focus:ring-2 focus:ring-primary/20 outline-none resize-none"
+            />
+          </div>
+          <div className="pt-2 flex items-center justify-end gap-3">
+            <Button type="button" variant="secondary" size="md" onClick={() => setIsAlertModalOpen(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" size="md">
+              Create Alert
+            </Button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 }

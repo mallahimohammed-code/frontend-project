@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
   LayoutDashboard, 
@@ -21,27 +21,66 @@ interface NavItemProps {
   icon: any;
   label: string;
   active?: boolean;
+  compact?: boolean;
+  onClick?: () => void;
   key?: string;
 }
 
-const NavItem = ({ to, icon: Icon, label, active }: NavItemProps) => (
+const NavItem = ({ to, icon: Icon, label, active, compact, onClick }: NavItemProps) => (
   <Link
     to={to}
+    onClick={onClick}
+    title={compact ? label : undefined}
     className={cn(
       "flex items-center gap-3 px-4 py-3 rounded-item transition-all duration-200 group",
+      compact && "justify-center mx-auto w-12 h-12 p-0 gap-0",
       active 
         ? "bg-white text-primary font-semibold shadow-bento" 
         : "text-on-surface-variant hover:text-primary hover:bg-white/50"
     )}
   >
     <Icon className={cn("w-5 h-5 transition-colors", active ? "text-primary" : "text-on-surface-variant group-hover:text-primary")} />
-    <span className="text-sm">{label}</span>
+    {!compact && <span className="text-sm">{label}</span>}
   </Link>
 );
 
 export const Shell = ({ children }: { children: React.ReactNode }) => {
-  const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth < 1024 : false
+  );
+  const [isDesktopCompact, setIsDesktopCompact] = useState(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const mediaQuery = window.matchMedia('(max-width: 1023px)');
+    const updateMode = (event: MediaQueryListEvent | MediaQueryList) => {
+      setIsMobile(event.matches);
+      if (!event.matches) {
+        setIsMobileSidebarOpen(false);
+      }
+    };
+
+    updateMode(mediaQuery);
+    const onChange = (event: MediaQueryListEvent) => updateMode(event);
+    mediaQuery.addEventListener('change', onChange);
+    return () => mediaQuery.removeEventListener('change', onChange);
+  }, []);
+
+  const toggleSidebar = () => {
+    if (isMobile) {
+      setIsMobileSidebarOpen((prev) => !prev);
+      return;
+    }
+    setIsDesktopCompact((prev) => !prev);
+  };
+
+  const sidebarWidthClass = isDesktopCompact ? 'lg:w-24' : 'lg:w-64';
+  const contentLeftClass = isDesktopCompact ? 'lg:pl-24' : 'lg:pl-64';
+  const headerLeftClass = isDesktopCompact ? 'lg:left-24' : 'lg:left-64';
+  const isCompact = !isMobile && isDesktopCompact;
 
   const navItems = [
     { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
@@ -55,16 +94,25 @@ export const Shell = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="min-h-screen bg-background flex">
+      {isMobile && isMobileSidebarOpen && (
+        <button
+          aria-label="Close sidebar backdrop"
+          onClick={() => setIsMobileSidebarOpen(false)}
+          className="fixed inset-0 z-40 bg-black/25 lg:hidden"
+        />
+      )}
+
       {/* Sidebar */}
       <aside className={cn(
-        "fixed inset-y-0 left-0 z-50 w-64 bg-surface-container-low p-8 flex flex-col transition-transform duration-300 lg:translate-x-0 border-r border-outline-variant",
-        !isSidebarOpen && "-translate-x-full"
+        "fixed inset-y-0 left-0 z-50 bg-surface-container-low p-8 flex flex-col transition-all duration-300 border-r border-outline-variant w-screen lg:w-64",
+        sidebarWidthClass,
+        isMobile ? (isMobileSidebarOpen ? "translate-x-0" : "-translate-x-full") : "translate-x-0"
       )}>
-        <div className="mb-10 flex items-center gap-3 px-2">
-          <div className="w-10 h-10 rounded-item bg-primary flex items-center justify-center text-white shadow-bento">
+        <div className={cn("mb-10 flex items-center gap-3 px-2", isCompact && "justify-center mx-auto w-12 h-12 p-0 gap-0")}>
+          <div className={cn("w-10 h-10 rounded-item bg-primary flex items-center justify-center text-white shadow-bento", isCompact && "w-12 h-12")}>
             <Warehouse className="w-6 h-6" />
           </div>
-          <span className="text-xl font-extrabold tracking-tight text-on-surface">PRECISION</span>
+          {!isCompact && <span className="text-xl font-extrabold tracking-tight text-on-surface">PRECISION</span>}
         </div>
 
         <nav className="flex-1 space-y-1">
@@ -74,32 +122,38 @@ export const Shell = ({ children }: { children: React.ReactNode }) => {
               to={item.to}
               icon={item.icon}
               label={item.label}
-              active={location.pathname === item.to} 
+              active={location.pathname === item.to}
+              compact={isCompact}
+              onClick={isMobile ? () => setIsMobileSidebarOpen(false) : undefined}
             />
           ))}
         </nav>
 
-        <div className="mt-auto pt-6 border-t border-outline-variant/20 flex items-center gap-3 px-2">
-          <img 
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDh8sVpaI32dz4Y_Hm7Tm58fF0hhgSYL3iSoDq8L53Q5kmICsvgQR18kBcRkTK18v3puetUrf3A5d5VF0WhFDCwfHfOdDJWl9Qo-6ivdDcyOQ-F59vwKAMVDoJfWN0LCnyt_BruGe1Til4hB5U0ueQDlpkZUPeRy-AAIPQGo_Xtky3NOuu5cXE48ErWBHvxylJN1ZKIrZ6zd1nvgACfWlMc99uwnrB8COl30w4WFZB7XxxuFUKxq_P5z-ltZ2qqC4uIPOP2ylApGQWf" 
-            alt="Admin" 
-            className="w-10 h-10 rounded-full object-cover ring-2 ring-white"
-          />
-          <div className="overflow-hidden">
-            <p className="text-sm font-bold truncate text-on-surface">Global Admin</p>
-            <p className="text-[10px] uppercase tracking-widest text-on-surface-variant">Merchant Profile</p>
+        <div className={cn("mt-auto pt-6 border-t border-outline-variant/20 flex items-center gap-3 px-2", isCompact && "justify-center px-0")}>
+          <div className="size-10 shrink-0 overflow-hidden rounded-full ring-2 ring-white">
+            <img 
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDh8sVpaI32dz4Y_Hm7Tm58fF0hhgSYL3iSoDq8L53Q5kmICsvgQR18kBcRkTK18v3puetUrf3A5d5VF0WhFDCwfHfOdDJWl9Qo-6ivdDcyOQ-F59vwKAMVDoJfWN0LCnyt_BruGe1Til4hB5U0ueQDlpkZUPeRy-AAIPQGo_Xtky3NOuu5cXE48ErWBHvxylJN1ZKIrZ6zd1nvgACfWlMc99uwnrB8COl30w4WFZB7XxxuFUKxq_P5z-ltZ2qqC4uIPOP2ylApGQWf" 
+              alt="Admin" 
+              className="size-full object-cover"
+            />
           </div>
+          {!isCompact && (
+            <div className="overflow-hidden">
+              <p className="text-sm font-bold truncate text-on-surface">Global Admin</p>
+              <p className="text-[10px] uppercase tracking-widest text-on-surface-variant">Merchant Profile</p>
+            </div>
+          )}
         </div>
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 lg:pl-64 flex flex-col min-w-0">
+      <div className={cn("flex-1 flex flex-col min-w-0", contentLeftClass)}>
         {/* TopBar */}
-        <header className="h-20 bg-surface-container-lowest fixed top-0 right-0 left-0 lg:left-64 z-40 flex items-center justify-between px-10 border-b border-outline-variant">
+        <header className={cn("h-20 bg-surface-container-lowest fixed top-0 right-0 left-0 z-40 flex items-center justify-between px-10 border-b border-outline-variant", headerLeftClass)}>
           <div className="flex items-center gap-4 flex-1">
             <button 
-              onClick={() => setSidebarOpen(!isSidebarOpen)}
-              className="lg:hidden p-2 text-on-surface-variant hover:bg-surface-container rounded-item"
+              onClick={toggleSidebar}
+              className="p-2 text-on-surface-variant hover:bg-surface-container rounded-item"
             >
               <Menu className="w-5 h-5" />
             </button>
@@ -122,7 +176,7 @@ export const Shell = ({ children }: { children: React.ReactNode }) => {
               <img 
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3R363iWhlkwEZLtOBino0xcakTQIs2h0W_8a3oYBcZBMQIzIOazF6h-mNLpN76e196llbhXxGtQCL3eoLwt3WfsogLY-8d9rrP9wiSSBD1u_hfTP_EP18Uprd8cehSacsdpDxsTCfQYr91uTbg9-cyvKc6hTHtjRuzKHxLshVBPUwjJ-FwFZNY2joENv4w3JRxkI8gCRC4MyF2d6yL4nGbWLucPG3ggyn5w5s44_--gRxttlaRduTwBnyJX3x-JIr4e-hvIzQUXy5" 
                 alt="Profile" 
-                className="w-9 h-9 rounded-full ring-2 ring-primary/10"
+                className="size-9 shrink-0 aspect-square rounded-full object-cover ring-2 ring-primary/10"
               />
               <div className="hidden xl:block">
                 <p className="text-xs font-bold text-on-surface leading-none">Admin User</p>

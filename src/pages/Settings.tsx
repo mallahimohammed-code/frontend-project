@@ -9,6 +9,7 @@ import {
   Cloud
 } from 'lucide-react';
 import { cn } from '@/src/lib/utils';
+import Button from '@/src/components/Button';
 
 const settingsGroups = [
   {
@@ -48,7 +49,11 @@ export default function Settings() {
               <div className="bg-surface-container-lowest rounded-bento shadow-bento border border-outline-variant overflow-hidden">
                 <div className="divide-y divide-outline-variant">
                   {group.items.map((item) => (
-                    <button key={item.name} className="w-full px-8 py-6 flex items-center justify-between hover:bg-surface-container-low transition-all group">
+                    <Button
+                      key={item.name}
+                      variant="ghost"
+                      className="w-full px-8 py-6 justify-between rounded-none shadow-none hover:bg-surface-container-low group"
+                    >
                       <div className="flex items-center gap-6 text-left">
                         <div className="p-3 bg-surface-container rounded-item text-on-surface-variant group-hover:text-primary group-hover:bg-primary/5 transition-all">
                           <item.icon className="w-5 h-5" />
@@ -58,8 +63,8 @@ export default function Settings() {
                           <p className="text-xs text-on-surface-variant font-medium mt-1">{item.desc}</p>
                         </div>
                       </div>
-                      <ChevronRight className="w-5 h-5 text-on-surface-variant group-hover:translate-x-1 transition-transform" />
-                    </button>
+                      <ChevronRight className="w-5 h-5 text-on-surface-variant group-hover:translate-x-1 transition-transform shrink-0" />
+                    </Button>
                   ))}
                 </div>
               </div>
@@ -88,12 +93,15 @@ export default function Settings() {
               </div>
             </div>
             <div className="mt-8 pt-8 border-t border-white/10 flex flex-col gap-4 relative z-10">
-              <button className="w-full py-3 bg-white text-indigo-700 rounded-item text-[10px] font-black uppercase tracking-widest hover:bg-white/90 transition-all">
+              <Button className="w-full py-3 bg-white text-indigo-700 text-[10px] font-black uppercase tracking-widest hover:bg-white/90 shadow-none active:scale-100">
                 Manual Sync
-              </button>
-              <button className="w-full py-3 bg-white/10 text-white rounded-item text-[10px] font-black uppercase tracking-widest hover:bg-white/20 transition-all border border-white/20">
+              </Button>
+              <Button
+                variant="secondary"
+                className="w-full py-3 bg-white/10 text-white text-[10px] font-black uppercase tracking-widest hover:bg-white/20 border-white/20 shadow-none active:scale-100"
+              >
                 System Diagnostics
-              </button>
+              </Button>
             </div>
             
             <div className="absolute -left-16 -bottom-16 w-48 h-48 bg-white/5 rounded-full blur-3xl" />

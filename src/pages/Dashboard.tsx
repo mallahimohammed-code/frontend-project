@@ -1,4 +1,5 @@
 import { TrendingUp, ShoppingBag, Package, AlertTriangle, ExternalLink, Plus } from 'lucide-react';
+import Button from '@/src/components/Button';
 import { 
   LineChart, 
   Line, 
@@ -41,14 +42,12 @@ export default function Dashboard() {
           <p className="text-on-surface-variant mt-2 font-medium">Curated business intelligence dashboard</p>
         </div>
         <div className="flex gap-3">
-          <button className="px-6 py-3 rounded-item bg-surface-container-lowest text-on-surface font-semibold text-sm shadow-bento hover:bg-surface-container transition-all flex items-center gap-2 border border-outline-variant">
-            <ExternalLink className="w-4 h-4" />
+          <Button variant="secondary" size="lg" leftIcon={<ExternalLink className="w-4 h-4" />}>
             Export
-          </button>
-          <button className="px-6 py-3 rounded-item bg-primary text-white font-bold text-sm shadow-bento hover:bg-primary-container active:scale-95 transition-all flex items-center gap-2">
-            <Plus className="w-4 h-4" />
+          </Button>
+          <Button size="lg" leftIcon={<Plus className="w-4 h-4" />}>
             New Listing
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -167,9 +166,9 @@ export default function Dashboard() {
               </div>
             ))}
           </div>
-          <button className="w-full mt-8 py-3 rounded-xl border-t border-outline-variant/10 text-xs font-black uppercase tracking-widest text-primary hover:bg-primary/5 transition-all">
+          <Button variant="link" className="w-full mt-8 py-3 rounded-xl border-t border-outline-variant/10 text-xs font-black uppercase tracking-widest hover:bg-primary/5 hover:no-underline">
             View Analytics
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -177,7 +176,9 @@ export default function Dashboard() {
       <div className="bg-surface-container-lowest rounded-bento shadow-bento border border-outline-variant overflow-hidden">
         <div className="p-8 flex justify-between items-center border-b border-surface-container-low">
           <h3 className="text-xl font-black text-on-surface tracking-tight">Recent Orders</h3>
-          <button className="text-primary text-sm font-black hover:underline underline-offset-4">View All Orders</button>
+          <Button variant="link" size="sm" className="font-black">
+            View All Orders
+          </Button>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left">

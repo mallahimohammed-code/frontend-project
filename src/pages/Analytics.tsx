@@ -14,6 +14,7 @@ import {
 } from 'recharts';
 import { salesData } from '@/src/mockData';
 import { Download, Filter, TrendingUp, Users, Target, MousePointer2 } from 'lucide-react';
+import Button from '@/src/components/Button';
 
 const analyticsItems = [
   { label: 'Conversion Rate', value: '3.2%', trend: '+0.4%', icon: MousePointer2, color: 'text-indigo-600', bg: 'bg-indigo-50' },
@@ -41,14 +42,12 @@ export default function Analytics() {
           <p className="text-on-surface-variant mt-2 font-medium">Deep learning and market predictive analysis</p>
         </div>
         <div className="flex gap-3">
-          <button className="px-6 py-3 bg-surface-container-lowest text-on-surface font-bold text-sm rounded-item border border-outline-variant shadow-bento hover:bg-surface-container transition-all flex items-center gap-2">
-            <Filter className="w-4 h-4" />
+          <Button variant="secondary" size="lg" leftIcon={<Filter className="w-4 h-4" />}>
             Filter Intelligence
-          </button>
-          <button className="px-6 py-3 bg-primary text-white font-bold text-sm rounded-item shadow-bento transition-all active:scale-95 flex items-center gap-2">
-            <Download className="w-4 h-4" />
+          </Button>
+          <Button size="lg" leftIcon={<Download className="w-4 h-4" />}>
             Export Insights
-          </button>
+          </Button>
         </div>
       </div>
 
