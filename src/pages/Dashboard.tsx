@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { TrendingUp, ShoppingBag, Package, AlertTriangle, ExternalLink, Plus } from 'lucide-react';
 import Button from '@/src/components/Button';
+import Modal from '@/src/components/Modal';
 import { 
   LineChart, 
   Line, 
@@ -33,6 +35,9 @@ const StatCard = ({ label, value, trend, icon: Icon, color, trendUp }: any) => (
 );
 
 export default function Dashboard() {
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [isNewListingModalOpen, setIsNewListingModalOpen] = useState(false);
+
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -42,10 +47,19 @@ export default function Dashboard() {
           <p className="text-on-surface-variant mt-2 font-medium">Curated business intelligence dashboard</p>
         </div>
         <div className="flex gap-3">
-          <Button variant="secondary" size="lg" leftIcon={<ExternalLink className="w-4 h-4" />}>
+          <Button
+            variant="secondary"
+            size="lg"
+            leftIcon={<ExternalLink className="w-4 h-4" />}
+            onClick={() => setIsExportModalOpen(true)}
+          >
             Export
           </Button>
-          <Button size="lg" leftIcon={<Plus className="w-4 h-4" />}>
+          <Button
+            size="lg"
+            leftIcon={<Plus className="w-4 h-4" />}
+            onClick={() => setIsNewListingModalOpen(true)}
+          >
             New Listing
           </Button>
         </div>
@@ -222,6 +236,93 @@ export default function Dashboard() {
           </table>
         </div>
       </div>
+
+      <Modal
+        isOpen={isExportModalOpen}
+        title="Export Dashboard"
+        onClose={() => setIsExportModalOpen(false)}
+      >
+        <form className="space-y-4">
+          <div>
+            <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1.5 block">
+              Report Type
+            </label>
+            <select className="w-full bg-surface-container border border-outline-variant rounded-item px-4 py-2.5 text-sm font-semibold text-on-surface focus:ring-2 focus:ring-primary/20 outline-none">
+              <option>Performance Summary</option>
+              <option>Revenue Breakdown</option>
+              <option>Top Sellers</option>
+              <option>Recent Orders</option>
+            </select>
+          </div>
+          <div>
+            <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1.5 block">
+              Format
+            </label>
+            <select className="w-full bg-surface-container border border-outline-variant rounded-item px-4 py-2.5 text-sm font-semibold text-on-surface focus:ring-2 focus:ring-primary/20 outline-none">
+              <option>PDF</option>
+              <option>CSV</option>
+              <option>XLSX</option>
+            </select>
+          </div>
+          <div className="pt-2 flex items-center justify-end gap-3">
+            <Button type="button" variant="secondary" size="md" onClick={() => setIsExportModalOpen(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" size="md" leftIcon={<ExternalLink className="w-4 h-4" />}>
+              Export
+            </Button>
+          </div>
+        </form>
+      </Modal>
+
+      <Modal
+        isOpen={isNewListingModalOpen}
+        title="New Listing"
+        onClose={() => setIsNewListingModalOpen(false)}
+      >
+        <form className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1.5 block">
+                Listing Name
+              </label>
+              <input
+                type="text"
+                placeholder="Minimalist Chronograph"
+                className="w-full bg-surface-container border border-outline-variant rounded-item px-4 py-2.5 text-sm text-on-surface focus:ring-2 focus:ring-primary/20 outline-none"
+              />
+            </div>
+            <div>
+              <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1.5 block">
+                Price
+              </label>
+              <input
+                type="number"
+                placeholder="249.00"
+                className="w-full bg-surface-container border border-outline-variant rounded-item px-4 py-2.5 text-sm text-on-surface focus:ring-2 focus:ring-primary/20 outline-none"
+              />
+            </div>
+          </div>
+          <div>
+            <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1.5 block">
+              Category
+            </label>
+            <select className="w-full bg-surface-container border border-outline-variant rounded-item px-4 py-2.5 text-sm font-semibold text-on-surface focus:ring-2 focus:ring-primary/20 outline-none">
+              <option>Lifestyle</option>
+              <option>Tech</option>
+              <option>Furniture</option>
+            </select>
+          </div>
+          <div className="pt-2 flex items-center justify-end gap-3">
+            <Button type="button" variant="secondary" size="md" onClick={() => setIsNewListingModalOpen(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" size="md">
+              Create Listing
+            </Button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 }

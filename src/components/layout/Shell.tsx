@@ -105,17 +105,24 @@ export const Shell = ({ children }: { children: React.ReactNode }) => {
       {/* Sidebar */}
       <aside className={cn(
         "fixed inset-y-0 left-0 z-50 bg-surface-container-low p-8 flex flex-col transition-all duration-300 border-r border-outline-variant w-screen lg:w-64",
+        isCompact && "lg:p-4 lg:items-center",
         sidebarWidthClass,
         isMobile ? (isMobileSidebarOpen ? "translate-x-0" : "-translate-x-full") : "translate-x-0"
       )}>
-        <div className={cn("mb-10 flex items-center gap-3 px-2", isCompact && "justify-center mx-auto w-12 h-12 p-0 gap-0")}>
-          <div className={cn("w-10 h-10 rounded-item bg-primary flex items-center justify-center text-white shadow-bento", isCompact && "w-12 h-12")}>
+        <div className={cn(
+          "mb-10 flex items-center gap-3 px-2 w-full",
+          isCompact && "justify-center px-0"
+        )}>
+          <div className={cn(
+            "w-10 h-10 shrink-0 rounded-item bg-primary flex items-center justify-center text-white shadow-bento",
+            isCompact && "w-12 h-12"
+          )}>
             <Warehouse className="w-6 h-6" />
           </div>
           {!isCompact && <span className="text-xl font-extrabold tracking-tight text-on-surface">PRECISION</span>}
         </div>
 
-        <nav className="flex-1 space-y-1">
+        <nav className={cn("flex-1 space-y-1 w-full", isCompact && "flex flex-col items-center")}>
           {navItems.map((item) => (
             <NavItem 
               key={item.to} 
@@ -129,7 +136,10 @@ export const Shell = ({ children }: { children: React.ReactNode }) => {
           ))}
         </nav>
 
-        <div className={cn("mt-auto pt-6 border-t border-outline-variant/20 flex items-center gap-3 px-2", isCompact && "justify-center px-0")}>
+        <div className={cn(
+          "mt-auto pt-6 border-t border-outline-variant/20 flex items-center gap-3 px-2 w-full",
+          isCompact && "justify-center px-0"
+        )}>
           <div className="size-10 shrink-0 overflow-hidden rounded-full ring-2 ring-white">
             <img 
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuDh8sVpaI32dz4Y_Hm7Tm58fF0hhgSYL3iSoDq8L53Q5kmICsvgQR18kBcRkTK18v3puetUrf3A5d5VF0WhFDCwfHfOdDJWl9Qo-6ivdDcyOQ-F59vwKAMVDoJfWN0LCnyt_BruGe1Til4hB5U0ueQDlpkZUPeRy-AAIPQGo_Xtky3NOuu5cXE48ErWBHvxylJN1ZKIrZ6zd1nvgACfWlMc99uwnrB8COl30w4WFZB7XxxuFUKxq_P5z-ltZ2qqC4uIPOP2ylApGQWf" 
